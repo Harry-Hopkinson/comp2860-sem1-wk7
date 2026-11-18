@@ -1,21 +1,23 @@
+from string import punctuation, whitespace
+
+
 class VigenereCipher:
     """
-       VigenereCipher class (TO BE COMPLETED).
+    VigenereCipher class.
 
-       Attributes:
-           keyword (str): The word to be used as the key
-           offset (int): The ASCII value of the letter 'A'. A static utility attribute to help you calculate
-                a letter's position in the alphabet from 0 (A) to 25 (Z).
+    Attributes:
+        keyword (str): The word to be used as the key
+        offset (int): The ASCII value of the letter 'A'. A static utility attribute to help you calculate
+             a letter's position in the alphabet from 0 (A) to 25 (Z).
     """
-    offset = ord('A')
+
+    offset = ord("A")
 
     def __init__(self, keyword: str):
         self.keyword = keyword.upper()
 
     def __shift_letter(self, letter: str, shift: int, forward: bool):
         """
-        TO BE COMPLETED
-
         Private method to shift a letter a number of positions forward or backward in the alphabet.
 
         YOU CAN REUSE YOUR METHOD FROM EXERCISE 1 WITH MINOR MODIFICATIONS
@@ -34,13 +36,14 @@ class VigenereCipher:
         str
             The shifted letter.
         """
-        shifted_letter = ''
+        shifted_letter = ""
+        shift = shift if forward else -shift
+
+        shifted_letter = chr((ord(letter) - self.offset + shift) % 26 + self.offset)
         return shifted_letter
 
     def __generate_shift_list(self, plaintext_length: int):
         """
-        TO BE COMPLETED
-
         Private method to generate a list of integers. Each element is the shift to encrypt the
         plaintext letter at the same position.
 
@@ -59,12 +62,16 @@ class VigenereCipher:
             A list of shifts (integers).
         """
         shift_list = []
+
+        for i in range(plaintext_length):
+            letter = self.keyword[i % len(self.keyword)]
+            shift = ord(letter.upper()) - ord("A")
+            shift_list.append(shift)
+
         return shift_list
 
     def encrypt(self, plaintext: str):
         """
-        TO BE COMPLETED
-
         Encrypts a plaintext string.
         It should:
             1. Convert lowercase input to uppercase
@@ -82,13 +89,19 @@ class VigenereCipher:
         str
             The ciphertext string.
         """
-        ciphertext = ''
+        ciphertext = ""
+        plaintext = "".join(
+            char for char in plaintext.upper() if char not in punctuation + whitespace
+        )
+        shiftList = self.__generate_shift_list(len(plaintext))
+
+        for i in range(len(shiftList)):
+            ciphertext += self.__shift_letter(plaintext[i], shiftList[i], True)
+
         return ciphertext
 
     def decrypt(self, ciphertext: str):
         """
-        TO BE COMPLETED
-
         Decrypts a ciphertext string
         It should:
             1. Convert lowercase input to uppercase
@@ -109,15 +122,23 @@ class VigenereCipher:
         str
             The plaintext string.
         """
-        plaintext = ''
+        plaintext = ""
+        ciphertext = "".join(
+            char for char in ciphertext.upper() if char not in punctuation + whitespace
+        )
+        shiftList = self.__generate_shift_list(len(ciphertext))
+
+        for i in range(len(shiftList)):
+            plaintext += self.__shift_letter(ciphertext[i], shiftList[i], False)
+
         return plaintext
 
 
 def main():
-    vig_cipher = VigenereCipher('smarties')
+    vig_cipher = VigenereCipher("smarties")
     ciphertext = vig_cipher.encrypt("The quick brown fox jumps over the lazy dog")
     plaintext = vig_cipher.decrypt(ciphertext)
-    assert plaintext == 'THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG'
+    assert plaintext == "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"
 
 
 if __name__ == "__main__":

@@ -3,24 +3,25 @@ import string
 import unittest
 import exercise5
 
+
 class TestVigenereCipher(unittest.TestCase):
     def test_encryption(self):
-        vig_cipher = exercise5.VigenereCipher('cornflakes')
+        vig_cipher = exercise5.VigenereCipher("cornflakes")
         ciphertext = vig_cipher.encrypt("The quick brown fox jumps over the lazy dog")
-        self.assertEqual(ciphertext, 'VVVDZTCUFJQKESTIJEQHUCMRWEHOPSBMUBL')
+        self.assertEqual(ciphertext, "VVVDZTCUFJQKESTIJEQHUCMRWEHOPSBMUBL")
 
     def test_decryption(self):
-        vig_cipher = exercise5.VigenereCipher('marmite')
+        vig_cipher = exercise5.VigenereCipher("marmite")
         plaintext = vig_cipher.decrypt("FHVCCBGWBIAEGJAXAGUIWAVVDBAIXAQKLHK")
-        self.assertEqual(plaintext, 'THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG')
+        self.assertEqual(plaintext, "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG")
 
     def test_consistency(self):
-        keyword = ''.join(random.sample(string.ascii_uppercase, 6))
+        keyword = "".join(random.sample(string.ascii_uppercase, 6))
         vig_cipher = exercise5.VigenereCipher(keyword)
         ciphertext = vig_cipher.encrypt("The quick brown fox jumps over the lazy dog")
         plaintext = vig_cipher.decrypt(ciphertext)
-        self.assertEqual(plaintext,'THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG')
+        self.assertEqual(plaintext, "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

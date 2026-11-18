@@ -1,4 +1,3 @@
-
 class ShiftCipher:
     """
     ShiftCipher class (TO BE COMPLETED).
@@ -9,7 +8,7 @@ class ShiftCipher:
             a letter's position in the alphabet from 0 (A) to 25 (Z).
     """
 
-    offset = ord('A')
+    offset = ord("A")
 
     def __init__(self, shift: int):
         self.shift = shift
@@ -32,7 +31,7 @@ class ShiftCipher:
         str
             The shifted letter.
         """
-        shifted_letter = ''
+        shifted_letter = ""
         return shifted_letter
 
     def encrypt(self, plaintext: str):
@@ -55,7 +54,7 @@ class ShiftCipher:
         str
             The ciphertext string.
         """
-        ciphertext = ''
+        ciphertext = ""
         return ciphertext
 
     def decrypt(self, ciphertext: str):
@@ -78,17 +77,18 @@ class ShiftCipher:
         str
             The plaintext string.
         """
-        plaintext = ''
+        plaintext = ""
         return plaintext
 
 
 def main():
     shift_cipher = ShiftCipher(3)
-    assert shift_cipher.encrypt('A') == 'D'
-    assert shift_cipher.decrypt('B') == 'Y'
-    ciphertext = shift_cipher.encrypt('The quick brown fox jumps over the lazy dog')
+    assert shift_cipher.encrypt("A") == "D"
+    assert shift_cipher.decrypt("B") == "Y"
+    ciphertext = shift_cipher.encrypt("The quick brown fox jumps over the lazy dog")
     plaintext = shift_cipher.decrypt(ciphertext)
-    assert plaintext == 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'
+    assert plaintext == "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"
+
 
 if __name__ == "__main__":
     main()
